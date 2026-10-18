@@ -30,7 +30,8 @@ jobs:
         run: |
           echo "Отправляем HTTP-запрос к контейнеру..."
           # Делаем запрос к развернутому контейнеру
-          RESPONSE=$(curl --silent --fail http://localhost:8080/hosts)
+          RESPONSE=$(curl --silent --fail http://localhost:8080/)
+          
           
           echo "Полученный ответ из контейнера:"
           echo "$RESPONSE"
