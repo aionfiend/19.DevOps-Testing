@@ -43,8 +43,9 @@ jobs:
         run: |
           echo "=== Старт проверки манифеста: ${{ matrix.manifest }} ==="
           
-          # Запуск валидации
-          kubeconform \
+          # ИСПРАВЛЕНО: Вызываем утилиту по абсолютному пути /kubeconform
+          # ИСПРАВЛЕНО: Указан корректный домен и путь для схем Istio (raw.githubusercontent.com)
+          /kubeconform \
             -strict \
             -summary \
             -schema-location default \
