@@ -2,12 +2,12 @@ name: Kubernetes Manifests Validation (Kubeconform)
 
 on:
   push:
-    branches: [ "test2" ]
+    branches: [ "task2" ]
     paths:
       - 'k8s-manifests/**.yaml'
       - 'k8s-manifests/**.yml'
   pull_request:
-    branches: [ "test2" ]
+    branches: [ "task2" ]
     paths:
       - 'k8s-manifests/**.yaml'
       - 'k8s-manifests/**.yml'
