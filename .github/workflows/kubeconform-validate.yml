@@ -17,7 +17,7 @@ jobs:
   list-manifests:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps:set-matrix.outputs.matrix }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        manifest: ${{ fromJson(needs:list-manifests.outputs.matrix) }}
+        manifest: ${{ fromJson(needs.list-manifests.outputs.matrix) }}
       fail-fast: false # Если один файл содержит ошибку, остальные всё равно проверятся
 
     # ВСЕ ИНСТРУМЕНТЫ ВНУТРИ КОНТЕЙНЕРА (официальный образ Kubeconform)
@@ -51,10 +51,7 @@ jobs:
         run: |
           echo "=== Старт проверки манифеста: ${{ matrix.manifest }} ==="
           
-          # Запуск валидации:
-          # -strict: запрещает использование недекларированных полей
-          # -summary: выводит понятную сводную таблицу в логах
-          # -schema-location: автоматически подгружает схемы Istio (Gateway/VirtualService) из публичного реестра CRD
+          # Запуск валидации
           kubeconform \
             -strict \
             -summary \
