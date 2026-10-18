@@ -70,8 +70,15 @@ jobs:
 
       # ОЧИСТКА: Удаление контейнера после завершения
       - name: Cleanup Environment
-        if: always()
+        if: always() # Выполнять в любом случае (даже если тесты упали)
         run: |
-          echo "Останавливаем и удаляем тестовый контейнер..."
-          docker stop test-container
-          docker rm test-container
+          echo "Проверяем наличие контейнера перед удалением..."
+          # Проверяем, существует ли контейнер, и удаляем только если он найден
+          if [ "$(docker ps -a -q -f name=test-container)" ]; then
+            echo "Останавливаем и удаляем тестовый контейнер..."
+            docker stop test-container || true
+            docker rm test-container || true
+          else
+            echo "Контейнер test-container не найден, очистка не требуется."
+          fi
+      
