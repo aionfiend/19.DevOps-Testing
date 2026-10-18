@@ -3,14 +3,8 @@ name: Kubernetes Manifests Validation (Kubeconform)
 on:
   push:
     branches: [ "task2" ]
-    paths:
-      - 'k8s-manifests/**.yaml'
-      - 'k8s-manifests/**.yml'
   pull_request:
     branches: [ "task2" ]
-    paths:
-      - 'k8s-manifests/**.yaml'
-      - 'k8s-manifests/**.yml'
 
 jobs:
   # Задача 1: Динамический поиск файлов для создания параллельной матрицы
@@ -51,7 +45,7 @@ jobs:
         run: |
           echo "=== Старт проверки манифеста: ${{ matrix.manifest }} ==="
           
-          # Запуск валидации
+          # Запуск валидации (ИСПРАВЛЕНО: корректный путь к внешним схемам CRD Datree)
           kubeconform \
             -strict \
             -summary \
